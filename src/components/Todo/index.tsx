@@ -46,7 +46,7 @@ const Todo = () => {
 		if (currentTab !== 'all') {
 			setCurrentTodos(todos.filter((todo) => todo.status === currentTab));
 		}
-	}, [currentTab]);
+	}, [currentTab, todos.length]);
 
 	const {
 		control,
@@ -147,6 +147,8 @@ const Todo = () => {
 									className='ml-auto'
 									onClick={() => {
 										dispatch(removeTodo(todo.id));
+										if (todos.length === 0)
+											setCurrentTab('all');
 									}}
 								>
 									<svg
@@ -156,7 +158,7 @@ const Todo = () => {
 									>
 										<path
 											fill='#494C6B'
-											fill-rule='evenodd'
+											fillRule='evenodd'
 											d='M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z'
 										/>
 									</svg>
@@ -238,48 +240,50 @@ const Todo = () => {
 					)}
 				</div>
 				{/* Separated Tab -> For Mobile only */}
-				<div
-					className={classNames(
-						'px-5 py-3 flex justify-center rounded sm:hidden gap-4',
-						theme === 'dark'
-							? 'bg-dark-very-dark-desaturated-blue'
-							: 'bg-white'
-					)}
-				>
-					<TabButton
-						currentTab={currentTab}
-						name='all'
-						onClick={() => {
-							if (currentTab != 'all') {
-								setCurrentTab('all');
-							}
-						}}
+				{todos.length > 0 && (
+					<div
+						className={classNames(
+							'px-5 py-3 flex justify-center rounded shadow-2xl sm:hidden gap-4',
+							theme === 'dark'
+								? 'bg-dark-very-dark-desaturated-blue'
+								: 'bg-white'
+						)}
 					>
-						All
-					</TabButton>
-					<TabButton
-						currentTab={currentTab}
-						name='active'
-						onClick={() => {
-							if (currentTab != 'active') {
-								setCurrentTab('active');
-							}
-						}}
-					>
-						Active
-					</TabButton>
-					<TabButton
-						currentTab={currentTab}
-						name='complete'
-						onClick={() => {
-							if (currentTab != 'complete') {
-								setCurrentTab('complete');
-							}
-						}}
-					>
-						Completed
-					</TabButton>
-				</div>
+						<TabButton
+							currentTab={currentTab}
+							name='all'
+							onClick={() => {
+								if (currentTab != 'all') {
+									setCurrentTab('all');
+								}
+							}}
+						>
+							All
+						</TabButton>
+						<TabButton
+							currentTab={currentTab}
+							name='active'
+							onClick={() => {
+								if (currentTab != 'active') {
+									setCurrentTab('active');
+								}
+							}}
+						>
+							Active
+						</TabButton>
+						<TabButton
+							currentTab={currentTab}
+							name='complete'
+							onClick={() => {
+								if (currentTab != 'complete') {
+									setCurrentTab('complete');
+								}
+							}}
+						>
+							Completed
+						</TabButton>
+					</div>
+				)}
 			</div>
 			{todos.length > 0 && (
 				<p
