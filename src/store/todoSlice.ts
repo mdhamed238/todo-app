@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 export type TodoItem = {
 	id: number;
 	name: string;
-	status: 'none' | 'active' | 'complete';
+	status: 'active' | 'complete';
 };
 
 export type State = {
@@ -26,7 +26,7 @@ export const todoSlice = createSlice({
 			state.todos.push({
 				id: state.todos.length + 1,
 				name: action.payload.name,
-				status: action.payload.completed ? 'complete' : 'none',
+				status: action.payload.completed ? 'complete' : 'active',
 			});
 		},
 		removeTodo: (state, action: PayloadAction<number>) => {
@@ -45,7 +45,7 @@ export const todoSlice = createSlice({
 			state,
 			action: PayloadAction<{
 				id: number;
-				status: 'none' | 'active' | 'complete';
+				status: 'active' | 'complete';
 			}>
 		) => {
 			const { id, status } = action.payload;

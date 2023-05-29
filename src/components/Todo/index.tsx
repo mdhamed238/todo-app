@@ -46,7 +46,7 @@ const Todo = () => {
 		if (currentTab !== 'all') {
 			setCurrentTodos(todos.filter((todo) => todo.status === currentTab));
 		}
-	}, [currentTab, todos.length]);
+	}, [currentTab, todos]);
 
 	const {
 		control,
@@ -71,7 +71,7 @@ const Todo = () => {
 		dispatch(
 			updateTodoStatus({
 				id: todo.id,
-				status: todo.status === 'none' ? 'complete' : 'none',
+				status: todo.status === 'active' ? 'complete' : 'active',
 			})
 		);
 	};
@@ -227,7 +227,7 @@ const Todo = () => {
 											dispatch(
 												updateTodoStatus({
 													id: todo.id,
-													status: 'none',
+													status: 'active',
 												})
 											);
 										});
